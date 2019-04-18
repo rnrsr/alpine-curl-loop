@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: curl-loop
+  labels:
+    app: richbean
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: curl-loop
+      app: richbean
+  template:
+    metadata:
+      name: alpine-curl-loop
+      labels:
+        name: curl-loop
+        app: richbean
+    spec:
+      containers:
+      - name: alpine-curl-loop
+        image: richbean/alpine-curl-loop:latest
+        env:
+        - name: SLEEP
+          value: "0.1"
+        - name: URI
+          value: httpbin.development.svc.cluster.local:8000/delay/0
